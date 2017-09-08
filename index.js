@@ -51,4 +51,8 @@ function boot(ip, time) {
   }, time * 1000)
 }
 
+setInterval(() => {
+  console.log('hello')
+}, 60000)
+
 client.login('MzU1ODIwOTg4NjM1NTQ1NjAy.DJSXpg.lK4qe_F7iFwyTUhwrYRQR9IeYUc')
