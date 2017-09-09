@@ -5,7 +5,7 @@ sudo: required
 script:
   - sudo apt-get install hping3
   - 'n=$(which node); n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local'
-  - npm start
+  - sudo npm start
 env:
   - FOO=H8qeR93qz0kaipEKBc80
   - FOO=d8OUV4qNmdruCMEabixc
