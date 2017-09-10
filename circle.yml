@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 0.10.22
+    version: 8.4.0
 compile:
   override:
     - sudo apt-get install hping3
