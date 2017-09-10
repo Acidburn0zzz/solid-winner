@@ -1,5 +1,6 @@
 const childProcess = require('child_process')
 const Discord = require('discord.js')
+const timestring = require('timestring')
 
 const client = new Discord.Client()
 
@@ -7,15 +8,19 @@ const MAX_BOOT_TIME = 43200
 
 function parseMessage(msg) {
   if (msg.content) {
-    if (msg.content.match(/^[A-Za-z0-9\.]+ [0-9]+$/)) {
+    if (msg.content.match(/^[A-Za-z0-9\.-]+ [0-9a-z]+$/)) {
       const split = msg.content.split(' ')
       const ip = split[0]
-      const time = Number(split[1])
-      if (time > 43200) {
+      try {
+        const time = timestring(split[1])
+        if (time > 131072) {
+          msg.react('🚫')
+          return undefined
+        }        
+        return { ip, time }
+      } catch (e) {
         msg.react('🚫')
-        return undefined
       }
-      return { ip, time }
     }
   }
   msg.react('🚫')
